@@ -5,7 +5,7 @@ import axios from 'axios'
 Vue.use(axios);
 Vue.use(VueRouter)
 
-import Book from '../components/Book.vue'
+import Book from '../components/pages/Book.vue'
 
 export default new VueRouter({
   mode: 'history',

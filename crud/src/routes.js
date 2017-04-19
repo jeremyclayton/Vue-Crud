@@ -1,6 +1,6 @@
 export default [
     {
         path: '/book/',
-        component: require('./components/book.vue')
+        component: require('./components/pages/book.vue')
     }
 ];
