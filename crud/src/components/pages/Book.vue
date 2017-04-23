@@ -33,17 +33,16 @@ export default {
     },
     created() {
         axios.get(`http://localhost:3000/books/${this.book.id}`).then(response => {
-            console.log(response.data);
             this.oneBook = response.data
         });
     },
     methods: {
         del: function() {
-            console.log("clicked");
             axios.delete(`http://localhost:3000/books/${this.book.id}`).then(() => {
                 this.$router.push('/')
             })
-        }
+        },
+
     }
 
 }

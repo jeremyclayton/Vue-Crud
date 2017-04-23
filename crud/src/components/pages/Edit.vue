@@ -1,62 +1,63 @@
 <template>
-    <div class="container">
-      <form>
-        <div class="form-group row">
-          <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-          </div>
+<div class="container">
+
+
+    <form>
+        <div class="form-group">
+            <label v-model="title" for="title">Title</label>
+            <input type="title" class="form-control" id="title" placeholder="Enter Title">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
-        <div class="form-group row">
-          <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-          </div>
+        <div class="form-group">
+            <label v-model="genre" for="genre">Genre</label>
+            <input type="genre" class="form-control" id="genre" placeholder="Enter Genre">
         </div>
-        <fieldset class="form-group row">
-          <legend class="col-form-legend col-sm-2">Radios</legend>
-          <div class="col-sm-10">
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                Option one is this and that&mdash;be sure to include why it's great
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                Option two can be something else and selecting it will deselect option one
-              </label>
-            </div>
-            <div class="form-check disabled">
-              <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
-                Option three is disabled
-              </label>
-            </div>
-          </div>
-        </fieldset>
-        <div class="form-group row">
-          <label class="col-sm-2">Checkbox</label>
-          <div class="col-sm-10">
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox"> Check me out
-              </label>
-            </div>
-          </div>
+        <div class="form-group">
+            <label v-model="description" for="description">Description:</label>
+            <textarea class="form-control" rows="5" id="description"></textarea>
         </div>
-        <div class="form-group row">
-          <div class="offset-sm-2 col-sm-10">
-            <button type="submit" class="btn btn-primary">Sign in</button>
-          </div>
+        <div class="form-group">
+            <label v-model="cover_url" for="cover_url">Cover URL</label>
+            <input type="over_url" class="form-control" id="over_url" placeholder="Enter Cover Url">
         </div>
-      </form>
-    </div>
+        <button type="submit" class="btn btn-primary" v-on:click="edit()">Submit</button>
+    </form>
+</div>
 </template>
 
 <script>
+import axios from 'axios'
+import store from '../../store.js'
+console.log(store);
 export default {
+    data() {
+        return {
+            book: store.selectedBook,
+            editBook: [],
+            title: '',
+            genre: '',
+            description: '',
+            cover_url: ''
+        }
+    },
+    created() {
+        axios.get(`http://localhost:3000/books/${this.book.id}`).then(response => {
+            console.log(response.data);
+            this.editBook = response.data
+        })
+    },
+    methods: {
+        edit: function() {
+            axios.put(`http://localhost:3000/books/${this.book.id}`, {
+                title: this.title,
+                genre: this.genre,
+                description: this.description,
+                cover_url: this.cover_url,
+            }).then(response => {
+                console.log(response.data);
+            })
+        }
+    }
 }
 </script>
 

@@ -23,7 +23,6 @@ import store from '../../store.js'
 export default {
     created() {
         axios.get(`http://localhost:3000/books`).then(response => {
-            console.log(response.data);
             this.books = response.data
         });
     },
